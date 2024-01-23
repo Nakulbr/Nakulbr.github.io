@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: whitesmoke;
+  display: grid;
+  height: 100dvh;
+  place-content: center;
+}
+
+.circle {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: black;
+  position: relative;
+  cursor: pointer;
+  transition: all 500ms;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.circle::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform: translateY(100%);
+  border-radius: inherit;
+  background-color: aqua;
+  transition: all 500ms;
+  z-index: 0;
+}
+
+.circle:hover::after {
+  animation: expandAndStay 600ms forwards;
+}
+
+.circle:not(:hover)::after {
+  animation: goBeyondTop 600ms;
+}
+
+.lines {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  z-index: 1;
+}
+
+.lines::before,
+.lines::after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  height: 5px;
+  background-color: blueviolet;
+  transition: all 200ms;
+}
+
+.lines::after {
+  bottom: 30px;
+  left: 0;
+}
+
+.lines::before {
+  top: 30px;
+  left: 0;
+}
+
+.circle:hover .lines::after {
+  transform-origin: right bottom;
+  transform: translateX(-12.5px) translateY(18px) rotateZ(45deg);
+}
+
+.circle:hover .lines::before {
+  transform-origin: right top;
+  transform: translateX(-12.5px) translateY(-18px) rotateZ(-45deg);
+}
+
+/* Animations */
+@keyframes expandAndStay {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes goBeyondTop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
